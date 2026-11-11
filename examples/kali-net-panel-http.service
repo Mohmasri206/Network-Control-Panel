@@ -1,0 +1,43 @@
+[Unit]
+Description=MOH HTTP subscriber portal without public administration
+After=network-online.target kali-net-panel.service
+Wants=network-online.target
+Requires=kali-net-panel.service
+PartOf=kali-net-panel.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/usr/local/lib/kali-net-panel
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=KNP_ROLE=guest
+Environment=KNP_PUBLIC_URL=http://192.168.5.1
+Environment=KNP_ADMIN_URL=https://192.168.100.1
+Environment=PATH=/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/usr/bin/python3 -m gunicorn --no-control-socket --workers 1 --threads 4 --timeout 30 --bind 192.168.5.1:80 --bind 192.168.100.1:80 --access-logfile - --error-logfile - panel:app
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/kali-net-panel
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+IPAddressDeny=any
+IPAddressAllow=192.168.5.0/24
+IPAddressAllow=192.168.100.1/32
+Restart=on-failure
+RestartSec=5
+MemoryMax=384M
+TasksMax=48
+
+[Install]
+WantedBy=multi-user.target

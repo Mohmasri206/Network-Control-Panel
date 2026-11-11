@@ -1,0 +1,5 @@
+'use strict';
+const remaining=document.querySelector('[data-expires]');
+if(remaining){const offset=Number(remaining.dataset.serverNow)*1000-Date.now();const update=()=>{if(Number(remaining.dataset.expires)===0){remaining.textContent='جلسة مفتوحة · حتى تسجيل الخروج أو إيقاف الحساب';return;}const seconds=Math.max(0,Math.ceil(Number(remaining.dataset.expires)-(Date.now()+offset)/1000));remaining.textContent=seconds>0?`الوقت المتبقي · ${String(Math.floor(seconds/3600)).padStart(2,'0')}:${String(Math.floor(seconds%3600/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`:'انتهت الجلسة. حدّث الصفحة لتسجيل الدخول.';};update();setInterval(update,1000);}
+const toggle=document.getElementById('password-toggle'),password=document.getElementById('password');
+if(toggle&&password)toggle.addEventListener('click',()=>{const show=password.type==='password';password.type=show?'text':'password';toggle.textContent=show?'إخفاء':'إظهار';toggle.setAttribute('aria-pressed',String(show));toggle.setAttribute('aria-label',show?'إخفاء كلمة المرور':'إظهار كلمة المرور');});

@@ -50,4 +50,3 @@ Copyright © 2026 Mohammed R Almasri. Original project code is distributed under
 Mohammed R Almasri · [Instagram](https://www.instagram.com/masri206/) · [Facebook](https://www.facebook.com/Masri206) · [WhatsApp](https://wa.me/972599188222)
 
 [Contact details](AUTHOR.md)
-
